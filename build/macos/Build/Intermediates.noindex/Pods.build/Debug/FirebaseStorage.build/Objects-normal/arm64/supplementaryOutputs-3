@@ -1,0 +1,23 @@
+{
+  "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/macos/Pods/FirebaseStorage/FirebaseStorage/Sources/Internal/StorageFetcherService.swift" : {
+    "const-values" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageFetcherService.swiftconstvalues",
+    "dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageFetcherService.d",
+    "diagnostics" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageFetcherService.dia",
+    "object" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageFetcherService.o",
+    "swift-dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageFetcherService.swiftdeps"
+  },
+  "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/macos/Pods/FirebaseStorage/FirebaseStorage/Sources/Internal/StorageGetDownloadURLTask.swift" : {
+    "const-values" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.swiftconstvalues",
+    "dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.d",
+    "diagnostics" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.dia",
+    "object" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.o",
+    "swift-dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.swiftdeps"
+  },
+  "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/macos/Pods/FirebaseStorage/FirebaseStorage/Sources/StorageError.swift" : {
+    "const-values" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageError.swiftconstvalues",
+    "dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageError.d",
+    "diagnostics" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageError.dia",
+    "object" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageError.o",
+    "swift-dependencies" : "/Users/omran/Web Menu Projects/qr_web_menu_alshami_alasl/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseStorage.build/Objects-normal/arm64/StorageError.swiftdeps"
+  }
+}
