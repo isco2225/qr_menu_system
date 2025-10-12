@@ -1,4 +1,4 @@
-package com.example.qr_web_menu_alshami_alasl
+package com.example.qr_menu_system
 
 import io.flutter.embedding.android.FlutterActivity
 

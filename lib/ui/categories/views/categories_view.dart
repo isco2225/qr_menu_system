@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_web_menu_alshami_alasl/ui/categories/categories.dart';
+import 'package:qr_menu_system/ui/categories/categories.dart';
 
 import '../../../data/data.dart';
 

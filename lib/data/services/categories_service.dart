@@ -1,4 +1,4 @@
-import 'package:qr_web_menu_alshami_alasl/domain/domain.dart';
+import 'package:qr_menu_system/domain/domain.dart';
 
 /// Mock categories service for testing
 class CategoriesService {

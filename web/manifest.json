@@ -1,6 +1,6 @@
 {
-    "name": "qr_web_menu_alshami_alasl",
-    "short_name": "qr_web_menu_alshami_alasl",
+    "name": "qr_menu_system",
+    "short_name": "qr_menu_system",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

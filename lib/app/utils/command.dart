@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qr_web_menu_alshami_alasl/app/app.dart';
+import 'package:qr_menu_system/app/app.dart';
 
 typedef CommandAction0<T> = Future<Result<T>> Function();
 typedef CommandAction1<T, A> = Future<Result<T>> Function(A);

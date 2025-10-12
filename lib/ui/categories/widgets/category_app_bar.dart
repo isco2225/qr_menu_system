@@ -8,7 +8,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text('Categories'),
       centerTitle: true,
-      leading: Image.asset('assets/app_logo.png', fit: BoxFit.cover),
+      //leading: Image.asset('assets/app_logo.png', fit: BoxFit.cover),
       forceMaterialTransparency: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
     );
