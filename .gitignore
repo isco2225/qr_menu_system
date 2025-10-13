@@ -12,6 +12,13 @@
 .swiftpm/
 migrate_working_dir/
 
+# Firebase
+lib/firebase_options.dart
+lib/firebase_options.g.dart
+
+# Environment variables
+*.env
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -22,6 +29,9 @@ migrate_working_dir/
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 #.vscode/
+
+# Environment
+.env
 
 # Flutter/Dart/Pub related
 **/doc/api/

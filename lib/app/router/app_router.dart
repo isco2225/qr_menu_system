@@ -25,4 +25,14 @@ class ProductsRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<AdminPanelRoute>(path: '/admin-panel')
+class AdminPanelRoute extends GoRouteData {
+  const AdminPanelRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return AdminPanelScreen();
+  }
+}
+
 final GoRouter appRouter = GoRouter(routes: $appRoutes);
