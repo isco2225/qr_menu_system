@@ -1,8 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../app/app.dart';
 import '../../domain/domain.dart';
 
 class ProductsService {
-  List<Product> fetchMockProducts() {
-    return [
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+
+  Future<Result<List<Product>>> fetchProductsByCategoryId(
+    String categoryId,
+  ) async {
+    try {
+      print('Fetching products by category id: $categoryId');
+      final result = await _firestore
+          .collection('products')
+          .where('categoryId', isEqualTo: categoryId)
+          .where('isActive', isEqualTo: true)
+          .get();
+      //if (result.docs.isEmpty) {
+      //  print('No products found');
+      //  return Result.error(Exception('No products found'));
+      //}
+      final products = result.docs
+          .map((doc) => Product.fromJson(doc.data()))
+          .toList();
+      return Result.ok(products);
+    } catch (e) {
+      return Result.error(Exception('Failed to load products: $e'));
+    }
+  }
+
+  /*List<Product> fetchMockProducts() {
+      return [
       Product(
         id: 1,
         categoryId: 1,
@@ -89,5 +117,5 @@ class ProductsService {
         discount: 0,
       ),
     ];
-  }
+  }*/
 }

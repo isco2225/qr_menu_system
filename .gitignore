@@ -19,6 +19,10 @@ lib/firebase_options.g.dart
 # Environment variables
 *.env
 
+# Web
+web/manifest.json
+web/firebase-messaging-sw.js
+
 # IntelliJ related
 *.iml
 *.ipr

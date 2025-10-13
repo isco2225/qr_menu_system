@@ -7,5 +7,5 @@ abstract class CategoryRepository {
   ValueListenable<List<Category>> get categories;
   Future<Result<List<Category>>> fetchCategories();
   Future<Result<Category>> fetchCategoryById(int id);
-  Future<Result<List<Category?>>> fetchActiveCategories();
+  //Future<Result<List<Category?>>> fetchActiveCategories();
 }

@@ -1,59 +1,28 @@
 import 'package:qr_menu_system/domain/domain.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// Mock categories service for testing
+import '../../app/app.dart';
+
 class CategoriesService {
-  /// Returns mock categories data
-  List<Category> fetchMockCategories() {
-    return const [
-      Category(
-        id: 1,
-        name: 'Chicken',
-        imageUrl: 'assets/categories/fride_chicken.jpeg',
-        isActive: true,
-      ),
-      Category(
-        id: 2,
-        name: 'Shawarma',
-        imageUrl: 'assets/categories/shawarma.jpg',
-        isActive: true,
-      ),
-      Category(
-        id: 3,
-        name: 'Salads',
-        imageUrl: 'assets/categories/salads.jpg',
-        isActive: true,
-      ),
-      Category(
-        id: 4,
-        name: 'Pizza',
-        imageUrl: 'assets/categories/pizza.jpg',
-        isActive: true,
-      ),
-      Category(
-        id: 5,
-        name: 'Pasta',
-        imageUrl: 'assets/categories/pasta.jpg',
-        isActive: true,
-      ),
-
-      Category(
-        id: 7,
-        name: 'barbecue',
-        imageUrl: 'assets/categories/barbecue.jpg',
-        isActive: true,
-      ),
-      Category(
-        id: 8,
-        name: 'Drinks',
-        imageUrl: 'assets/categories/drinks.jpg',
-        isActive: true,
-      ),
-      Category(
-        id: 12,
-        name: 'Sandwiches',
-        imageUrl: 'assets/products/fahitta.jpeg',
-        isActive: true,
-      ),
-    ];
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+  Future<Result<List<Category>>> fetchCategories() async {
+    try {
+      print('Fetching categories');
+      final categories = await _firestore
+          .collection('categories')
+          .where('isActive', isEqualTo: true)
+          .get();
+      if (categories.docs.isEmpty) {
+        print('No categories found');
+        return Result.error(Exception('No categories found'));
+      }
+      print('Categories loaded: ${categories.docs.map((doc) => doc.data())}');
+      return Result.ok(
+        categories.docs.map((doc) => Category.fromJson(doc.data())).toList(),
+      );
+    } catch (e) {
+      print('Failed to load categories: $e');
+      return Result.error(Exception('Failed to load categories: $e'));
+    }
   }
 }

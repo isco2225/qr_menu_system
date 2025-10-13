@@ -6,7 +6,7 @@ import '../../ui.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key, required this.categoryId});
-  final int categoryId;
+  final String categoryId;
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();

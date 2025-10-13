@@ -18,7 +18,7 @@ class InfinityScrollableProducts extends StatefulWidget {
     required this.productBuilder,
     super.key,
   });
-  final int categoryId;
+  final String categoryId;
   final FetchProductsViewModel fetchProductsViewModel;
   final Widget noItemsToShowWidget;
   final VoidCallback onFetch;

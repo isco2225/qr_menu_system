@@ -6,7 +6,11 @@ part of 'app_router.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$categoriesRoute, $productsRoute];
+List<RouteBase> get $appRoutes => [
+  $categoriesRoute,
+  $productsRoute,
+  $adminPanelRoute,
+];
 
 RouteBase get $categoriesRoute => GoRouteData.$route(
   path: '/',
@@ -38,11 +42,33 @@ RouteBase get $productsRoute => GoRouteData.$route(
 
 extension $ProductsRouteExtension on ProductsRoute {
   static ProductsRoute _fromState(GoRouterState state) =>
-      ProductsRoute(categoryId: int.parse(state.pathParameters['categoryId']!));
+      ProductsRoute(categoryId: state.pathParameters['categoryId']!);
 
   String get location => GoRouteData.$location(
-    '/categories/${Uri.encodeComponent(categoryId.toString())}/products',
+    '/categories/${Uri.encodeComponent(categoryId)}/products',
   );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $adminPanelRoute => GoRouteData.$route(
+  path: '/admin-panel',
+
+  factory: $AdminPanelRouteExtension._fromState,
+);
+
+extension $AdminPanelRouteExtension on AdminPanelRoute {
+  static AdminPanelRoute _fromState(GoRouterState state) =>
+      const AdminPanelRoute();
+
+  String get location => GoRouteData.$location('/admin-panel');
 
   void go(BuildContext context) => context.go(location);
 

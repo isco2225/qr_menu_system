@@ -6,14 +6,13 @@ part 'product.g.dart';
 @freezed
 sealed class Product with _$Product {
   const factory Product({
-    @Default(-1) int id,
-    @Default(-1) int categoryId,
+    @Default('') String id,
+    @Default('') String categoryId,
     @Default('') String name,
     @Default('') String description,
-    @Default([]) List<String> imageUrls,
+    @Default('') String imageUrl,
     @Default(true) bool isActive,
     @Default(0) double price,
-    @Default(0) double discount,
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) =>

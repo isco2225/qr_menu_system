@@ -65,7 +65,7 @@ class ProductBox extends StatelessWidget {
                     ),
                   ),
                   child: Image.asset(
-                    product.imageUrls.first,
+                    product.imageUrl,
                     fit: BoxFit.cover,
                     errorBuilder:
                         (

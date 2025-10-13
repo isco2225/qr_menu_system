@@ -44,7 +44,7 @@ class ProductDetail extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(color: Colors.grey.shade100),
                     child: Image.asset(
-                      product.imageUrls.first,
+                      product.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder:
                           (

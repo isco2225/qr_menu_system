@@ -6,7 +6,7 @@ part 'category.g.dart';
 @freezed
 sealed class Category with _$Category {
   const factory Category({
-    @Default(-1) int id,
+    @Default('') String id,
     @Default('') String name,
     @Default('') String imageUrl,
     @Default(true) bool isActive,

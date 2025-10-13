@@ -17,7 +17,7 @@ class CategoriesRoute extends GoRouteData {
 @TypedGoRoute<ProductsRoute>(path: '/categories/:categoryId/products')
 class ProductsRoute extends GoRouteData {
   const ProductsRoute({required this.categoryId});
-  final int categoryId;
+  final String categoryId;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {

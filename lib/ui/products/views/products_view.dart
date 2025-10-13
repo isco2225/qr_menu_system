@@ -11,7 +11,7 @@ class ProductsView extends StatefulWidget {
     required this.categoryId,
   });
   final FetchProductsViewModel fetchProductsViewModel;
-  final int categoryId;
+  final String categoryId;
 
   @override
   State<ProductsView> createState() => _ProductsViewState();
@@ -33,7 +33,7 @@ class _ProductsViewState extends State<ProductsView> {
       body: InfinityScrollableProducts(
         categoryId: widget.categoryId,
         fetchProductsViewModel: widget.fetchProductsViewModel,
-        noItemsToShowWidget: const SizedBox.shrink(),
+        noItemsToShowWidget: Center(child: Text('No products found')),
         onFetch: () => widget.fetchProductsViewModel.fetchProducts.execute((
           categoryId: widget.categoryId,
         )),

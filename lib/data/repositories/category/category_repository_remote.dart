@@ -19,34 +19,35 @@ class CategoryRepositoryRemote extends CategoryRepository {
   @override
   Future<Result<List<Category>>> fetchCategories() async {
     try {
-      final categories = _categoriesService.fetchMockCategories();
-      switch (Result.ok(categories)) {
+      final Result<List<Category>> result = await _categoriesService
+          .fetchCategories();
+      switch (result) {
         case Ok():
-          _categories.value = categories;
-          return Result.ok(categories);
+          _categories.value = result.value;
+          return result;
         case Error():
-          return Result.error(Exception('Failed to load categories'));
+          return result;
       }
     } catch (e) {
       return Result.error(Exception('Failed to load categories: $e'));
     }
   }
 
-  @override
-  Future<Result<List<Category?>>> fetchActiveCategories() async {
-    try {
-      final categories = _categoriesService.fetchMockCategories();
-      final activeCategories = categories
-          .where((category) => category.isActive)
-          .toList();
-      if (activeCategories.isEmpty) {
-        return Result.error(Exception('No active categories found'));
-      }
-      return Result.ok(activeCategories);
-    } catch (e) {
-      return Result.error(Exception('Failed to load active categories: $e'));
-    }
-  }
+  //@override
+  //Future<Result<List<Category?>>> fetchActiveCategories() async {
+  //  try {
+  //    final categories = _categoriesService.fetchMockCategories();
+  //    final activeCategories = categories
+  //        .where((category) => category.isActive)
+  //        .toList();
+  //    if (activeCategories.isEmpty) {
+  //      return Result.error(Exception('No active categories found'));
+  //    }
+  //    return Result.ok(activeCategories);
+  //  } catch (e) {
+  //    return Result.error(Exception('Failed to load active categories: $e'));
+  //  }
+  //}
 
   @override
   Future<Result<Category>> fetchCategoryById(int id) {

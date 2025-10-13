@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart' hide Category;
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
 import '../../../../app/app.dart';
@@ -24,7 +24,7 @@ class FetchProductsViewModel {
   final ValueNotifier<List<Product>> _products = ValueNotifier([]);
 
   // COMMANDS
-  late Command1<void, ({int categoryId})> fetchProducts;
+  late Command1<void, ({String categoryId})> fetchProducts;
 
   // DISPOSE
   void dispose() {
@@ -35,11 +35,10 @@ class FetchProductsViewModel {
 
   // FUNCTIONS
   Future<Result<List<Product>>> _fetchProducts(
-    ({int categoryId}) commands,
+    ({String categoryId}) commands,
   ) async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
-      final result = await _productRepository.fetchProducts(
+      final result = await _productRepository.fetchProductsByCategoryId(
         commands.categoryId,
       );
       if (result is Error<List<Product>>) {

@@ -35,7 +35,6 @@ class FetchCategoriesViewModel {
   // FUNCTIONS
   Future<Result<List<Category>>> _fetchCategories() async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
       final result = await _categoryRepository.fetchCategories();
       if (result is Error<List<Category>>) {
         _log.warning('Failed to load categories', result.error);
