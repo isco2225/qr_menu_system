@@ -24,6 +24,7 @@ class _ProductsViewState extends State<ProductsView> {
       appBar: ProductAppBar(
         title: 'Products',
         onBackPressed: () {
+          // We need to delay the pop to avoid the issue of the animation glitch
           Future.delayed(const Duration(milliseconds: 250), () {
             if (!context.mounted || !context.canPop()) return;
             context.pop();
@@ -33,7 +34,7 @@ class _ProductsViewState extends State<ProductsView> {
       body: InfinityScrollableProducts(
         categoryId: widget.categoryId,
         fetchProductsViewModel: widget.fetchProductsViewModel,
-        noItemsToShowWidget: Center(child: Text('No products found')),
+        noItemsToShowWidget: const ProductNoItem(),
         onFetch: () => widget.fetchProductsViewModel.fetchProducts.execute((
           categoryId: widget.categoryId,
         )),

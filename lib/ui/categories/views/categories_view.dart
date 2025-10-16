@@ -38,9 +38,7 @@ class _CategoriesViewState extends State<CategoriesView> {
         hasError: _fetchCategoriesViewModel.fetchCategories.error,
         isFetching: _fetchCategoriesViewModel.fetchCategories.running,
         isAllItemsFetched: _fetchCategoriesViewModel.fetchCategories.completed,
-        noItemsToShowWidget: const Center(
-          child: Text('No categories available'),
-        ),
+        noItemsToShowWidget: const CategoryNoItem(),
         onFetch: () => _fetchCategoriesViewModel.fetchCategories.execute(),
       ),
     );
