@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../app/app.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CategoryAppBar({super.key});
@@ -11,6 +12,14 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
       //leading: Image.asset('assets/app_logo.png', fit: BoxFit.cover),
       forceMaterialTransparency: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
+      actions: [
+        IconButton(
+          onPressed: () {
+            CreateAdminRoute().go(context);
+          },
+          icon: const Icon(Icons.admin_panel_settings),
+        ),
+      ],
     );
   }
 

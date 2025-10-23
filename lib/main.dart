@@ -16,6 +16,7 @@ void main() async {
       productsRepository: ProductRepositoryRemote(
         productsService: ProductsService(),
       ),
+      adminRepository: AdminRepositoryRemote(adminService: AdminService()),
     ),
   );
 }

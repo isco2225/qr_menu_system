@@ -10,10 +10,11 @@ class AppScreen extends StatefulWidget {
     super.key,
     required this.categoriesRepository,
     required this.productsRepository,
+    required this.adminRepository,
   });
   final CategoryRepository categoriesRepository;
   final ProductRepository productsRepository;
-
+  final AdminRepository adminRepository;
   @override
   State<AppScreen> createState() => _AppScreenState();
 }
@@ -42,6 +43,7 @@ class _AppScreenState extends State<AppScreen> {
       providers: [
         Provider(create: (_) => widget.categoriesRepository),
         Provider(create: (_) => widget.productsRepository),
+        Provider(create: (_) => widget.adminRepository),
       ],
       child: ValueListenableBuilder<bool>(
         valueListenable: _fetchCategoriesViewModel.fetchCategories.running,
