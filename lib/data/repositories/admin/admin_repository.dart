@@ -1,18 +1,17 @@
+import 'package:flutter/foundation.dart';
+
 import '../../../app/app.dart';
 import '../../../domain/domain.dart';
 
 abstract class AdminRepository {
-  /// Signs in an admin with email and password.
+  ValueListenable<AdminUser> get admin;
   Future<Result<void>> signIn({
     required String email,
     required String password,
   });
 
-  /// Signs out the current admin.
   Future<Result<void>> signOut();
-
-  /// Gets the currently authenticated admin.
-  Future<Result<AdminUser>> getCurrentAdmin();
+  Future<Result<AdminUser>> fetchCurrentAdmin();
 
   Future<Result<AdminUser>> createAdmin({
     required String email,

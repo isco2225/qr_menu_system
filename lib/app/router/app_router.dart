@@ -45,7 +45,7 @@ class SignInRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<CreateAdminRoute>(path: '/create-admin')
+/*@TypedGoRoute<CreateAdminRoute>(path: '/create-admin')
 class CreateAdminRoute extends GoRouteData {
   const CreateAdminRoute();
 
@@ -53,6 +53,6 @@ class CreateAdminRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return const CreateAdminScreen();
   }
-}
+}*/
 
 final GoRouter appRouter = GoRouter(routes: $appRoutes);

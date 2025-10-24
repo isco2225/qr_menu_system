@@ -29,16 +29,15 @@ class AdminService {
     }
   }
 
-  Future<Result<AdminUser>> getCurrentAdmin() async {
+  Future<Result<AdminUser>> fetchCurrentAdmin() async {
     try {
       final user = _auth.currentUser;
       if (user == null) {
         return Result.error(Exception('No admin logged in'));
       }
-
       final doc = await _firestore.collection('admins').doc(user.uid).get();
       if (!doc.exists) {
-        return Result.ok(AdminUser(uid: user.uid, email: user.email ?? ''));
+        return Result.error(Exception('Admin not found'));
       }
 
       return Result.ok(AdminUser.fromJson(doc.data()!));
@@ -54,7 +53,6 @@ class AdminService {
     required AdminUserRole role,
   }) async {
     try {
-      // Create the new admin user (this will auto-login as the new user)
       final UserCredential credential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -62,7 +60,6 @@ class AdminService {
         return Result.error(Exception('Failed to create user'));
       }
 
-      // Create admin record in Firestore
       final AdminUser adminUser = AdminUser(
         uid: credential.user!.uid,
         email: email,

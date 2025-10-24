@@ -15,7 +15,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            CreateAdminRoute().go(context);
+            SignInRoute().go(context);
           },
           icon: const Icon(Icons.admin_panel_settings),
         ),

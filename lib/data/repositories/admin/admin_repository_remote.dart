@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../../app/app.dart';
 import '../../../domain/domain.dart';
 import '../../services/admin_service.dart';
@@ -9,6 +11,10 @@ class AdminRepositoryRemote implements AdminRepository {
     : _adminService = adminService;
 
   final AdminService _adminService;
+
+  @override
+  ValueListenable<AdminUser> get admin => _admin;
+  final ValueNotifier<AdminUser> _admin = ValueNotifier(AdminUser());
 
   @override
   Future<Result<void>> signIn({
@@ -37,10 +43,16 @@ class AdminRepositoryRemote implements AdminRepository {
   }
 
   @override
-  Future<Result<AdminUser>> getCurrentAdmin() async {
+  Future<Result<AdminUser>> fetchCurrentAdmin() async {
     try {
-      final result = await _adminService.getCurrentAdmin();
-      return result;
+      final result = await _adminService.fetchCurrentAdmin();
+      switch (result) {
+        case Ok():
+          _admin.value = result.value;
+          return result;
+        case Error():
+          return result;
+      }
     } catch (e) {
       return Result.error(Exception('Failed to get current admin: $e'));
     }

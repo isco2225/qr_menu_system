@@ -11,7 +11,6 @@ List<RouteBase> get $appRoutes => [
   $productsRoute,
   $adminPanelRoute,
   $signInRoute,
-  $createAdminRoute,
 ];
 
 RouteBase get $categoriesRoute => GoRouteData.$route(
@@ -92,28 +91,6 @@ extension $SignInRouteExtension on SignInRoute {
   static SignInRoute _fromState(GoRouterState state) => const SignInRoute();
 
   String get location => GoRouteData.$location('/sign-in');
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $createAdminRoute => GoRouteData.$route(
-  path: '/create-admin',
-
-  factory: $CreateAdminRouteExtension._fromState,
-);
-
-extension $CreateAdminRouteExtension on CreateAdminRoute {
-  static CreateAdminRoute _fromState(GoRouterState state) =>
-      const CreateAdminRoute();
-
-  String get location => GoRouteData.$location('/create-admin');
 
   void go(BuildContext context) => context.go(location);
 
