@@ -33,6 +33,7 @@ class SignOutViewModel extends ChangeNotifier {
   // FUNCTIONS
 
   Future<Result<void>> _signOut() async {
+    _log.info('signing out');
     final result = await _adminRepository.signOut();
     return result;
   }

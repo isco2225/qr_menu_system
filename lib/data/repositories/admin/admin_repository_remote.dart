@@ -13,8 +13,8 @@ class AdminRepositoryRemote implements AdminRepository {
   final AdminService _adminService;
 
   @override
-  ValueListenable<AdminUser> get admin => _admin;
-  final ValueNotifier<AdminUser> _admin = ValueNotifier(AdminUser());
+  ValueListenable<AdminUser?> get admin => _admin;
+  final ValueNotifier<AdminUser?> _admin = ValueNotifier(null);
 
   @override
   Future<Result<void>> signIn({
@@ -26,7 +26,13 @@ class AdminRepositoryRemote implements AdminRepository {
         email: email,
         password: password,
       );
-      return result;
+      switch (result) {
+        case Ok():
+          _admin.value = result.value;
+          return Result.ok(null);
+        case Error():
+          return result;
+      }
     } catch (e) {
       return Result.error(Exception('Failed to sign in: $e'));
     }
@@ -36,7 +42,13 @@ class AdminRepositoryRemote implements AdminRepository {
   Future<Result<void>> signOut() async {
     try {
       final result = await _adminService.signOut();
-      return result;
+      switch (result) {
+        case Ok():
+          _admin.value = null;
+          return Result.ok(null);
+        case Error():
+          return Result.error(result.error);
+      }
     } catch (e) {
       return Result.error(Exception('Failed to sign out: $e'));
     }

@@ -20,7 +20,7 @@ class FetchAdminViewModel {
   final AdminRepository _adminRepository;
 
   // DOMAIN
-  ValueListenable<AdminUser> get admin => _adminRepository.admin;
+  ValueListenable<AdminUser?> get admin => _adminRepository.admin;
 
   // COMMANDS
   late Command0 fetchCurrentAdmin;
@@ -33,12 +33,13 @@ class FetchAdminViewModel {
 
   // FUNCTIONS
   Future<Result<void>> _fetchCurrentAdmin() async {
-    try {
-      await _adminRepository.fetchCurrentAdmin();
-      return Result.ok(null);
-    } catch (e) {
-      _log.warning('Failed to load admin', e);
-      return Result.error(Exception('Failed to load admin: $e'));
-    }
+    // try {
+    //   await _adminRepository.fetchCurrentAdmin();
+    //   return Result.ok(null);
+    // } catch (e) {
+    //   _log.warning('Failed to load admin', e);
+    //   return Result.error(Exception('Failed to load admin: $e'));
+    // }
+    return Result.ok(null);
   }
 }

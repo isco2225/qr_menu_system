@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared/shared.dart';
 import 'package:shared/widgets/base/base_scaffold.dart';
+import 'package:shared/widgets/text_fields/app_text_field.dart';
 
 import '../../../../ui.dart';
 
@@ -12,14 +14,19 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-  late final TextEditingController _emailController;
-  late final TextEditingController _passwordController;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -27,16 +34,28 @@ class _SignInViewState extends State<SignInView> {
     return BaseScaffold(
       body: Column(
         children: [
-          TextField(controller: _emailController),
-          TextField(controller: _passwordController),
-          ElevatedButton(
+          AppTextField(
+            'Email',
+            showText: 'show',
+            hideText: 'hide',
+            textEditingController: _emailController,
+          ),
+          AppTextField(
+            'Password',
+            showText: 'show',
+            hideText: 'hide',
+            isPassword: true,
+            textEditingController: _passwordController,
+          ),
+          AppButton(
+            running: widget.signInViewModel.signIn.running,
             onPressed: () {
               widget.signInViewModel.signIn.execute((
                 email: _emailController.text,
                 password: _passwordController.text,
               ));
             },
-            child: Text('Sign In'),
+            text: 'Sign In',
           ),
         ],
       ),

@@ -21,7 +21,6 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     fetchAdminViewModel = FetchAdminViewModel(
       adminRepository: context.read<AdminRepository>(),
     );
-    fetchAdminViewModel.fetchCurrentAdmin.execute();
     signOutViewModel = SignOutViewModel(
       adminRepository: context.read<AdminRepository>(),
     );

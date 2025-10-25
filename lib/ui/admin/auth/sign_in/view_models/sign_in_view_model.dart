@@ -31,8 +31,8 @@ class SignInViewModel extends ChangeNotifier {
   }
 
   // FUNCTIONS
-
   Future<Result<void>> _signIn(({String email, String password}) params) async {
+    _log.info('Signing in with email: ${params.email}');
     final result = await _adminRepository.signIn(
       email: params.email,
       password: params.password,

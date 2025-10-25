@@ -17,6 +17,11 @@ class AdminPanelView extends StatefulWidget {
 
 class _AdminPanelViewState extends State<AdminPanelView> {
   @override
+  // void initState() {
+  //   super.initState();
+  //   widget.fetchAdminViewModel.fetchCurrentAdmin.execute();
+  // }
+  @override
   Widget build(BuildContext context) {
     return BaseScaffold(
       appBar: AppBar(
@@ -35,15 +40,15 @@ class _AdminPanelViewState extends State<AdminPanelView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Admin Email: ${widget.fetchAdminViewModel.admin.value.email}',
+            'Admin Email: ${widget.fetchAdminViewModel.admin.value?.email ?? 'No admin found'}',
             style: TextStyle(color: Colors.black),
           ),
           Text(
-            'Admin Name: ${widget.fetchAdminViewModel.admin.value.name}',
+            'Admin Name: ${widget.fetchAdminViewModel.admin.value?.name ?? 'No admin found'}',
             style: TextStyle(color: Colors.black),
           ),
           Text(
-            'Admin Role: ${widget.fetchAdminViewModel.admin.value.role}',
+            'Admin Role: ${widget.fetchAdminViewModel.admin.value?.role ?? 'No admin found'}',
             style: TextStyle(color: Colors.black),
           ),
         ],

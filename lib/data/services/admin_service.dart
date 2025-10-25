@@ -8,13 +8,30 @@ import '../../domain/domain.dart';
 class AdminService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
-  Future<Result<void>> signIn({
+  Future<Result<AdminUser>> signIn({
     required String email,
     required String password,
   }) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return Result.ok(null);
+      final UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (credential.user == null) {
+        return Result.error(Exception('Sign in failed: no user'));
+      }
+
+      final DocumentSnapshot doc = await _firestore
+          .collection('admins')
+          .doc(credential.user!.uid)
+          .get();
+
+      if (!doc.exists) {
+        return Result.error(Exception('Admin not found'));
+      }
+
+      return Result.ok(AdminUser.fromJson(doc.data() as Map<String, dynamic>));
     } catch (e) {
       return Result.error(Exception('Failed to sign in: $e'));
     }

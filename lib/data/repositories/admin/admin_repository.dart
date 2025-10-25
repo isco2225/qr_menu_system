@@ -4,7 +4,7 @@ import '../../../app/app.dart';
 import '../../../domain/domain.dart';
 
 abstract class AdminRepository {
-  ValueListenable<AdminUser> get admin;
+  ValueListenable<AdminUser?> get admin;
   Future<Result<void>> signIn({
     required String email,
     required String password,

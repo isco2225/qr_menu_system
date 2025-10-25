@@ -23,7 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
     signInViewModel.signIn.handleError(context);
     signInViewModel.signIn.handleCompleted(
       context,
-      onCompleted: (result) {
+      onCompleted: (_) {
         AdminPanelRoute().go(context);
       },
     );
