@@ -33,6 +33,7 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     return BaseScaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppTextField(
             'Email',

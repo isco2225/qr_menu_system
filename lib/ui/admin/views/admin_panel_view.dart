@@ -8,24 +8,32 @@ class AdminPanelView extends StatefulWidget {
     super.key,
     required this.fetchAdminViewModel,
     required this.signOutViewModel,
+    required this.fetchCategoriesViewModel,
   });
   final FetchAdminViewModel fetchAdminViewModel;
   final SignOutViewModel signOutViewModel;
+  final FetchCategoriesViewModel fetchCategoriesViewModel;
   @override
   State<AdminPanelView> createState() => _AdminPanelViewState();
 }
 
 class _AdminPanelViewState extends State<AdminPanelView> {
-  @override
+  // @override
   // void initState() {
   //   super.initState();
-  //   widget.fetchAdminViewModel.fetchCurrentAdmin.execute();
+  //   widget.fetchCategoriesViewModel.fetchCategories.execute();
   // }
+
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
       appBar: AppBar(
         title: Text('Admin Panel'),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(
+            'https://ui-avatars.com/api/?name=${widget.fetchAdminViewModel.admin.value?.name ?? ''}',
+          ),
+        ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -36,22 +44,21 @@ class _AdminPanelViewState extends State<AdminPanelView> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Admin Email: ${widget.fetchAdminViewModel.admin.value?.email ?? 'No admin found'}',
-            style: TextStyle(color: Colors.black),
-          ),
-          Text(
-            'Admin Name: ${widget.fetchAdminViewModel.admin.value?.name ?? 'No admin found'}',
-            style: TextStyle(color: Colors.black),
-          ),
-          Text(
-            'Admin Role: ${widget.fetchAdminViewModel.admin.value?.role ?? 'No admin found'}',
-            style: TextStyle(color: Colors.black),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+
+      body: InfinityScrollableCategories(
+        fetchCategoriesViewModel: widget.fetchCategoriesViewModel,
+        categories: widget.fetchCategoriesViewModel.categories,
+        hasError: widget.fetchCategoriesViewModel.fetchCategories.error,
+        isFetching: widget.fetchCategoriesViewModel.fetchCategories.running,
+        isAllItemsFetched:
+            widget.fetchCategoriesViewModel.fetchCategories.completed,
+        noItemsToShowWidget: const CategoryNoItem(),
+        onFetch: () =>
+            widget.fetchCategoriesViewModel.fetchCategories.execute(),
       ),
     );
   }

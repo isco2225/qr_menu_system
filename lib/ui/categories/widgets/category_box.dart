@@ -10,10 +10,12 @@ class CategoryBox extends StatelessWidget {
     super.key,
     required this.category,
     required this.fetchCategoriesViewModel,
+    this.isAdmin = false,
   });
 
   final Category category;
   final FetchCategoriesViewModel fetchCategoriesViewModel;
+  final bool? isAdmin;
 
   static const double _cardHeight = 140.0;
   static const double _cardWidth = 220.0;

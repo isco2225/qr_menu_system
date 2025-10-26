@@ -9,8 +9,8 @@ part of 'app_router.dart';
 List<RouteBase> get $appRoutes => [
   $categoriesRoute,
   $productsRoute,
-  $adminPanelRoute,
   $signInRoute,
+  $adminPanelRoute,
 ];
 
 RouteBase get $categoriesRoute => GoRouteData.$route(
@@ -59,10 +59,38 @@ extension $ProductsRouteExtension on ProductsRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $signInRoute => GoRouteData.$route(
+  path: '/sign-in',
+
+  factory: $SignInRouteExtension._fromState,
+);
+
+extension $SignInRouteExtension on SignInRoute {
+  static SignInRoute _fromState(GoRouterState state) => const SignInRoute();
+
+  String get location => GoRouteData.$location('/sign-in');
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $adminPanelRoute => GoRouteData.$route(
   path: '/admin-panel',
 
   factory: $AdminPanelRouteExtension._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'create-category',
+
+      factory: $CreateCategoryRouteExtension._fromState,
+    ),
+  ],
 );
 
 extension $AdminPanelRouteExtension on AdminPanelRoute {
@@ -81,16 +109,11 @@ extension $AdminPanelRouteExtension on AdminPanelRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $signInRoute => GoRouteData.$route(
-  path: '/sign-in',
+extension $CreateCategoryRouteExtension on CreateCategoryRoute {
+  static CreateCategoryRoute _fromState(GoRouterState state) =>
+      const CreateCategoryRoute();
 
-  factory: $SignInRouteExtension._fromState,
-);
-
-extension $SignInRouteExtension on SignInRoute {
-  static SignInRoute _fromState(GoRouterState state) => const SignInRoute();
-
-  String get location => GoRouteData.$location('/sign-in');
+  String get location => GoRouteData.$location('/admin-panel/create-category');
 
   void go(BuildContext context) => context.go(location);
 

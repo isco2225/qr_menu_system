@@ -14,6 +14,7 @@ class AdminPanelScreen extends StatefulWidget {
 class _AdminPanelScreenState extends State<AdminPanelScreen> {
   late final FetchAdminViewModel fetchAdminViewModel;
   late final SignOutViewModel signOutViewModel;
+  late final FetchCategoriesViewModel fetchCategoriesViewModel;
 
   @override
   void initState() {
@@ -23,6 +24,9 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     );
     signOutViewModel = SignOutViewModel(
       adminRepository: context.read<AdminRepository>(),
+    );
+    fetchCategoriesViewModel = FetchCategoriesViewModel(
+      categoryRepository: context.read<CategoryRepository>(),
     );
     signOutViewModel.signOut.handleError(context);
     signOutViewModel.signOut.handleCompleted(
@@ -37,6 +41,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
   void dispose() {
     fetchAdminViewModel.dispose();
     signOutViewModel.dispose();
+    fetchCategoriesViewModel.dispose();
     super.dispose();
   }
 
@@ -45,6 +50,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     return AdminPanelView(
       fetchAdminViewModel: fetchAdminViewModel,
       signOutViewModel: signOutViewModel,
+      fetchCategoriesViewModel: fetchCategoriesViewModel,
     );
   }
 }
