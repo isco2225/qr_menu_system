@@ -12,6 +12,7 @@ void main() async {
     AppScreen(
       categoriesRepository: CategoryRepositoryRemote(
         categoriesService: CategoriesService(),
+        storageService: StorageService(),
       ),
       productsRepository: ProductRepositoryRemote(
         productsService: ProductsService(),

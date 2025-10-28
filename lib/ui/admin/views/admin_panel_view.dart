@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/base/base_scaffold.dart';
 
+import '../../../app/app.dart';
 import '../../ui.dart';
 
 class AdminPanelView extends StatefulWidget {
@@ -45,8 +46,8 @@ class _AdminPanelViewState extends State<AdminPanelView> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
+        onPressed: () => CreateCategoryRoute().go(context),
+        child: const Icon(Icons.add),
       ),
 
       body: InfinityScrollableCategories(

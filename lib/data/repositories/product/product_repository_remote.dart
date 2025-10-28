@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import '../../../app/app.dart';
 import '../../../domain/domain.dart';
 import '../../data.dart';
@@ -22,6 +24,21 @@ class ProductRepositoryRemote extends ProductRepository {
     } catch (e) {
       return Result.error(Exception('Failed to load products: $e'));
     }
+  }
+
+  @override
+  Future<Result<String>> uploadProductImage({
+    required Uint8List imageBytes,
+    required String productId,
+  }) async {
+    // it will use _storageService.uploadImage to upload the image to the storage
+    return Result.error(Exception('Not implemented'));
+  }
+
+  @override
+  Future<Result<void>> deleteProductImage({required String imageUrl}) async {
+    // it will use _storageService.deleteImage to delete the image from the storage
+    return Result.error(Exception('Not implemented'));
   }
 
   //@override
