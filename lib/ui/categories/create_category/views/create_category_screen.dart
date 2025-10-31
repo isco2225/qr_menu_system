@@ -19,17 +19,23 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
   @override
   void initState() {
     super.initState();
-    final CategoryRepository categoryRepository = context
-        .read<CategoryRepository>();
-
     _viewModel = CreateCategoryViewModel(
       imagePickerService: ImagePickerService(),
-      categoryRepository: categoryRepository,
+      categoryRepository: context.read<CategoryRepository>(),
       uploadCategoryImageUseCase: UploadCategoryImageUseCase(
         compressionService: ImageCompressionService(),
-        categoryRepository: categoryRepository,
+        categoryRepository: context.read<CategoryRepository>(),
       ),
     );
+    _viewModel.createCategory.handleCompleted(
+      context,
+      onCompleted: (category) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Category created successfully')),
+        );
+      },
+    );
+    _viewModel.createCategory.handleError(context);
   }
 
   @override

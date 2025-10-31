@@ -70,19 +70,22 @@ class CategoryRepositoryRemote extends CategoryRepository {
     required Uint8List imageBytes,
   }) async {
     try {
+      print('Uploading category image');
       // Generate unique filename using timestamp and random component
       final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
       final String random = DateTime.now().microsecondsSinceEpoch
           .toString()
           .substring(7);
       final String uniqueFilename = '${timestamp}_$random';
-
-      final String imageUrl = await _storageService.uploadImage(
+      print('Unique filename: $uniqueFilename');
+      final Result<String> imageUrl = await _storageService.uploadImage(
         imageBytes: imageBytes,
         path: 'categories/$uniqueFilename.jpg',
       );
-      return Result.ok(imageUrl);
+      print('Uploaded image URL: $imageUrl');
+      return imageUrl;
     } catch (e) {
+      print('Failed to upload category image: $e');
       return Result.error(Exception('Failed to upload category image: $e'));
     }
   }

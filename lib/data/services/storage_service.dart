@@ -1,5 +1,8 @@
 import 'dart:typed_data';
+
 import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../app/app.dart';
 
 /// Service for uploading files to Firebase Storage
 ///
@@ -13,24 +16,26 @@ class StorageService {
   /// [path] - Storage path (e.g., 'products/product_id/image.jpg')
   ///
   /// Returns download URL as [String]
-  Future<String> uploadImage({
+  Future<Result<String>> uploadImage({
     required Uint8List imageBytes,
     required String path,
   }) async {
     try {
+      print('uploading image to storage: $path');
       final Reference ref = _storage.ref().child(path);
-
+      print('reference: $ref');
       final UploadTask uploadTask = ref.putData(
         imageBytes,
         SettableMetadata(contentType: 'image/jpeg'),
       );
-
+      print('upload task: $uploadTask');
       final TaskSnapshot snapshot = await uploadTask;
       final String downloadUrl = await snapshot.ref.getDownloadURL();
-
-      return downloadUrl;
+      print('download url: $downloadUrl');
+      return Result.ok(downloadUrl);
     } catch (e) {
-      throw Exception('Failed to upload image: $e');
+      print('failed to upload image: $e');
+      return Result.error(Exception('Failed to upload image: $e'));
     }
   }
 
@@ -40,7 +45,7 @@ class StorageService {
   /// [basePath] - Base storage path (e.g., 'products/product_id')
   ///
   /// Returns List of download URLs
-  Future<List<String>> uploadMultipleImages({
+  /*Future<List<String>> uploadMultipleImages({
     required List<Uint8List> imageBytesList,
     required String basePath,
   }) async {
@@ -56,7 +61,7 @@ class StorageService {
     }
 
     return downloadUrls;
-  }
+  }*/
 
   /// Deletes an image from Firebase Storage
   ///

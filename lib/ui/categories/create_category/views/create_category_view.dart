@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared/shared.dart';
 
-import '../../../../app/app.dart';
 import '../view_models/view_models.dart';
 
 class CreateCategoryView extends StatefulWidget {
@@ -20,44 +18,12 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
   @override
   void initState() {
     super.initState();
-
-    // Listen to command result
-    widget.viewModel.createCategory.result.addListener(_onResultChanged);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
-    widget.viewModel.createCategory.result.removeListener(_onResultChanged);
     super.dispose();
-  }
-
-  void _onResultChanged() {
-    final Result<void>? result = widget.viewModel.createCategory.result.value;
-
-    if (result == null) return;
-
-    switch (result) {
-      case Ok():
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Category created successfully!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-          context.pop(); // Go back to admin panel
-        }
-      case Error():
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(result.error.toString()),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-    }
   }
 
   void _onSubmit() {
@@ -71,7 +37,6 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
       );
       return;
     }
-
     widget.viewModel.createCategory.execute(name);
   }
 
