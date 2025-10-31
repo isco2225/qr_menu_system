@@ -55,13 +55,13 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Category Name Field
-                    AppTextField(
-                      'Enter category name',
-                      textEditingController: _nameController,
-                      showText: 'Show',
-                      hideText: 'Hide',
-                      isReadOnly: isLoading,
-                    ),
+                    // AppTextFormField(
+                    //   'Enter category name',
+                    //   textEditingController: _nameController,
+                    //   showText: 'Show',
+                    //   hideText: 'Hide',
+                    //   isReadOnly: isLoading,
+                    // ),
                     const SizedBox(height: 24),
 
                     // Image Picker Button

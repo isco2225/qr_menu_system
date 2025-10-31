@@ -35,6 +35,10 @@ class SignOutViewModel extends ChangeNotifier {
   Future<Result<void>> _signOut() async {
     _log.info('signing out');
     final result = await _adminRepository.signOut();
+    if (result is Error<void>) {
+      _log.warning('failed to sign out.');
+      return result;
+    }
     return result;
   }
 }

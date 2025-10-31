@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_menu_system/ui/admin/auth/sign_in/widgets/widgets.dart';
 import 'package:shared/shared.dart';
-import 'package:shared/widgets/base/base_scaffold.dart';
-import 'package:shared/widgets/text_fields/app_text_field.dart';
 
 import '../../../../ui.dart';
 
@@ -14,51 +13,60 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final displayEmailError = ValueNotifier<bool>(false);
+  final displayPasswordError = ValueNotifier<bool>(false);
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    email.dispose();
+    password.dispose();
+    displayEmailError.dispose();
+    displayPasswordError.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppTextField(
-            'Email',
-            showText: 'show',
-            hideText: 'hide',
-            textEditingController: _emailController,
-          ),
-          AppTextField(
-            'Password',
-            showText: 'show',
-            hideText: 'hide',
-            isPassword: true,
-            textEditingController: _passwordController,
-          ),
-          AppButton(
-            running: widget.signInViewModel.signIn.running,
-            onPressed: () {
-              widget.signInViewModel.signIn.execute((
-                email: _emailController.text,
-                password: _passwordController.text,
-              ));
-            },
-            text: 'Sign In',
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListenableBuilder(
+              listenable: Listenable.merge([displayEmailError, email]),
+              builder: (context, _) {
+                return SignInEmailTextField(
+                  displayError: displayEmailError,
+                  email: email,
+                );
+              },
+            ),
+            ListenableBuilder(
+              listenable: Listenable.merge([displayPasswordError, password]),
+              builder: (context, _) {
+                return SignInPasswordTextField(
+                  displayError: displayPasswordError,
+                  password: password,
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            ValueListenableBuilder(
+              valueListenable: widget.signInViewModel.signIn.running,
+              builder: (context, isRunning, child) => isRunning
+                  ? Center(child: CircularProgressIndicator())
+                  : SignInButton(
+                      email: email,
+                      password: password,
+                      viewModel: widget.signInViewModel,
+                      displayEmailError: displayEmailError,
+                      displayPasswordError: displayPasswordError,
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

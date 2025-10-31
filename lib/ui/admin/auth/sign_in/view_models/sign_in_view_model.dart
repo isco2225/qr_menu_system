@@ -37,6 +37,10 @@ class SignInViewModel extends ChangeNotifier {
       email: params.email,
       password: params.password,
     );
+    if (result is Error<void>) {
+      _log.warning('failed to sign in');
+      return result;
+    }
     return result;
   }
 }

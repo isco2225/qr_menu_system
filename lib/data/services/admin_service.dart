@@ -19,7 +19,7 @@ class AdminService {
       );
 
       if (credential.user == null) {
-        return Result.error(Exception('Sign in failed: no user'));
+        return Result.error(const AuthException.authRequired());
       }
 
       final DocumentSnapshot doc = await _firestore
@@ -28,12 +28,22 @@ class AdminService {
           .get();
 
       if (!doc.exists) {
-        return Result.error(Exception('Admin not found'));
+        return Result.error(const AdminException.noAdminFound());
       }
-
       return Result.ok(AdminUser.fromJson(doc.data() as Map<String, dynamic>));
-    } catch (e) {
-      return Result.error(Exception('Failed to sign in: $e'));
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      return switch (e.code) {
+        'invalid-email' => Result.error(AuthException.emailNotFound()),
+        'missing-password' => Result.error(AuthException.passwordNotFound()),
+        'invalid-credential' => Result.error(
+          const AuthException.invalidCredential(),
+        ),
+        'too-many-requests' => Result.error(
+          const AuthException.tooManyFailedAttempts(),
+        ),
+        _ => Result.error(const AuthException.unknown()),
+      };
     }
   }
 

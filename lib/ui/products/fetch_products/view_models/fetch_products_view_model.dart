@@ -37,20 +37,15 @@ class FetchProductsViewModel {
   Future<Result<List<Product>>> _fetchProducts(
     ({String categoryId}) commands,
   ) async {
-    try {
-      final result = await _productRepository.fetchProductsByCategoryId(
-        commands.categoryId,
-      );
-      if (result is Error<List<Product>>) {
-        _log.warning('Failed to load products', result.asError.error);
-        return result;
-      }
-      _log.fine('Products loaded');
-      _products.value = result.asOk.value;
+    final result = await _productRepository.fetchProductsByCategoryId(
+      commands.categoryId,
+    );
+    if (result is Error<List<Product>>) {
+      _log.warning('Failed to load products', result.asError.error);
       return result;
-    } catch (e) {
-      _log.warning('Failed to load products', e);
-      return Result.error(Exception('Failed to load products: $e'));
     }
+    _log.fine('Products loaded');
+    _products.value = result.asOk.value;
+    return result;
   }
 }

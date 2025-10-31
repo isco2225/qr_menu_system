@@ -41,45 +41,32 @@ class CreateCategoryViewModel {
 
   // FUNCTIONS
   Future<Result<void>> _createCategory(String name) async {
-    try {
-      _log.info('Creating category: $name');
-      if (_imageBytes.value == null) {
-        _log.warning('No image selected');
-        return Result.error(Exception('No image selected'));
-      }
-      _log.info('Uploading category image');
-      final imageResult = await _uploadCategoryImageUseCase.call(
-        imageBytes: _imageBytes.value!,
-      );
-      switch (imageResult) {
-        case Ok():
-          _log.info('Category image uploaded: ${imageResult.asOk.value}');
-          break;
-        case Error():
-          _log.warning('Failed to upload category image: ${imageResult.error}');
-          return Result.error(
-            Exception('Failed to upload category image: ${imageResult.error}'),
-          );
-      }
-      final categoryResult = await _categoryRepository.createCategory(
-        imageUrl: imageResult.asOk.value,
-        name: name,
-        isActive: true,
-      );
-      switch (categoryResult) {
-        case Ok():
-          _imageBytes.value = null; // Clear image after success
-          _log.info('Category created: ${categoryResult.value.id}');
-          return Result.ok(null);
-        case Error():
-          _log.warning('Failed to create category: ${categoryResult.error}');
-          return Result.error(
-            Exception('Failed to create category: ${categoryResult.error}'),
-          );
-      }
-    } catch (e) {
-      _log.warning('Failed to create category abc: $e');
-      return Result.error(Exception('Failed to create category: $e'));
+    _log.info('Creating category: $name');
+    _log.info('Uploading category image');
+    final imageResult = await _uploadCategoryImageUseCase.call(
+      imageBytes: _imageBytes.value!,
+    );
+    switch (imageResult) {
+      case Ok():
+        _log.info('Category image uploaded: ${imageResult.asOk.value}');
+        break;
+      case Error():
+        _log.warning('Failed to upload category image: ${imageResult.error}');
+        return imageResult;
+    }
+    final categoryResult = await _categoryRepository.createCategory(
+      imageUrl: imageResult.asOk.value,
+      name: name,
+      isActive: true,
+    );
+    switch (categoryResult) {
+      case Ok():
+        _imageBytes.value = null; // Clear image after success
+        _log.info('Category created: ${categoryResult.value.id}');
+        return Result.ok(null);
+      case Error():
+        _log.warning('Failed to create category: ${categoryResult.error}');
+        return categoryResult;
     }
   }
 

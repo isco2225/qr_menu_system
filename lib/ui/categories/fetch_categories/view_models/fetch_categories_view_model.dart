@@ -34,17 +34,15 @@ class FetchCategoriesViewModel {
 
   // FUNCTIONS
   Future<Result<List<Category>>> _fetchCategories() async {
-    try {
-      final result = await _categoryRepository.fetchCategories();
-      if (result is Error<List<Category>>) {
-        _log.warning('Failed to load categories', result.error);
-        return result;
-      }
-      _log.fine('Categories loaded');
+    final result = await _categoryRepository.fetchCategories();
+    if (result is Error<List<Category>>) {
+      _log.warning('Failed to load categories', result.error);
       return result;
-    } catch (e) {
-      _log.warning('Failed to load categories', e);
-      return Result.error(Exception('Failed to load categories: $e'));
     }
+    if (result is Error<List<Category>>) {
+      _log.warning('Could not fetching');
+    }
+    _log.fine('Categories loaded');
+    return result;
   }
 }

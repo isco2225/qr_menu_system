@@ -41,27 +41,19 @@ class CreateAdminViewModel {
   Future<Result<AdminUser>> _createAdmin(
     ({String email, String password, String name, AdminUserRole role}) params,
   ) async {
-    try {
-      _log.info(
-        'Creating admin: ${params.email} with role: ${params.role.name}',
-      );
+    _log.info('Creating admin: ${params.email} with role: ${params.role.name}');
 
-      final Result<AdminUser> result = await _adminRepository.createAdmin(
-        email: params.email,
-        password: params.password,
-        name: params.name,
-        role: params.role,
-      );
-      if (result is Error<AdminUser>) {
-        _log.warning('Failed to create admin: ${params.email}', result.error);
-        return result;
-      }
-      _log.fine('Admin created successfully: ${params.email}');
-
+    final Result<AdminUser> result = await _adminRepository.createAdmin(
+      email: params.email,
+      password: params.password,
+      name: params.name,
+      role: params.role,
+    );
+    if (result is Error<AdminUser>) {
+      _log.warning('Failed to create admin: ${params.email}', result.error);
       return result;
-    } catch (e) {
-      _log.warning('Failed to create admin: ${params.email}', e);
-      return Result.error(Exception('Failed to create admin: $e'));
     }
+    _log.fine('Admin created successfully: ${params.email}');
+    return result;
   }
 }

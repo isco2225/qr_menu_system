@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_menu_system/app/app.dart';
+import 'package:qr_menu_system/app/errors/localization/exception_localization.dart';
 
 typedef CommandAction0<T> = Future<Result<T>> Function();
 typedef CommandAction1<T, A> = Future<Result<T>> Function(A);
@@ -89,7 +90,9 @@ abstract class Command<T> {
       final Exception exception = value.asError.error;
       clearResult();
       if (showSnackBar) {
-        final String message = 'Error: ${exception.toString()}';
+        final String message = context.exceptionToUserFriendlyMessage(
+          exception,
+        );
         context.showErrorSnackBar(message);
       }
       _pop(context, popCount);

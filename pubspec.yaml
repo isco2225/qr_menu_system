@@ -32,6 +32,9 @@ dependencies:
   freezed_annotation: 3.0.0
 
   logging: ^1.2.0
+
+  # Validation
+  formz: 0.8.0
   
   # Environment
   flutter_dotenv: ^5.2.1
