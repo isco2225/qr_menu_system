@@ -1,0 +1,64 @@
+import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
+
+import '../../../../app/app.dart';
+import '../../../../data/data.dart';
+import '../../../../domain/domain.dart';
+
+class AdminProductViewModel {
+  AdminProductViewModel({required ProductRepository productRepository})
+    : _productRepository = productRepository {
+    // DEFINE COMMANDS
+    fetchProducts = Command1(
+      _fetchProducts,
+      debugLabel: 'FetchProductsViewModel.fetchProducts',
+    );
+    getProductsCount = Command0(
+      _getProductsCount,
+      debugLabel: 'FetchProductsViewModel.getProductsCount',
+    );
+  }
+  // LOGGER
+  final _log = Logger('FetchCategoriesViewModel');
+  // REPOSITORIES & USE CASES
+  final ProductRepository _productRepository;
+
+  // DOMAIN
+  ValueListenable<List<Product>> get products => _products;
+  final ValueNotifier<List<Product>> _products = ValueNotifier([]);
+
+  ValueListenable<int> get productsCount => _productRepository.productsCount;
+
+  // COMMANDS
+  late Command1<void, ({String categoryId})> fetchProducts;
+  late Command0<void> getProductsCount;
+
+  // DISPOSE
+  void dispose() {
+    fetchProducts.dispose();
+    _products.dispose();
+    _log.fine('Disposed');
+  }
+
+  // FUNCTIONS
+  Future<Result<List<Product>>> _fetchProducts(
+    ({String categoryId}) commands,
+  ) async {
+    final result = await _productRepository.fetchProductsByCategoryId(
+      commands.categoryId,
+    );
+    if (result is Error<List<Product>>) {
+      _log.warning('Failed to load products', result.asError.error);
+      return result;
+    }
+    _log.fine('Products loaded');
+    _products.value = result.asOk.value;
+    return result;
+  }
+
+  Future<Result> _getProductsCount() async {
+    _log.info('getting productsCount');
+    final result = await _productRepository.getProductCount();
+    return result;
+  }
+}

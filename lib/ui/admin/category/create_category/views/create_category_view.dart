@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_menu_system/ui/admin/admin.dart';
 import 'package:shared/shared.dart';
 
+import '../../../../../domain/domain.dart';
 import '../view_models/view_models.dart';
 
 class CreateCategoryView extends StatefulWidget {
-  const CreateCategoryView({super.key, required this.viewModel});
+  const CreateCategoryView({
+    super.key,
+    required this.createCategoryViewModel,
+    required this.admin,
+  });
 
-  final CreateCategoryViewModel viewModel;
+  final CreateCategoryViewModel createCategoryViewModel;
+  final AdminUser? admin;
 
   @override
   State<CreateCategoryView> createState() => _CreateCategoryViewState();
@@ -33,12 +40,24 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please enter category name'),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.red,
         ),
       );
       return;
     }
-    widget.viewModel.createCategory.execute(name);
+    if (widget.admin == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Admin not found'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    widget.createCategoryViewModel.createCategory.execute((
+      name: name,
+      admin: widget.admin!,
+    ));
   }
 
   @override
@@ -59,7 +78,7 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
         ),
       ),
       body: ValueListenableBuilder<bool>(
-        valueListenable: widget.viewModel.createCategory.running,
+        valueListenable: widget.createCategoryViewModel.createCategory.running,
         builder: (context, isLoading, _) {
           return Stack(
             children: [
@@ -82,7 +101,8 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
                     OutlinedButton.icon(
                       onPressed: isLoading
                           ? null
-                          : () => widget.viewModel.pickImage.execute(),
+                          : () => widget.createCategoryViewModel.pickImage
+                                .execute(),
                       icon: const Icon(Icons.image),
                       label: const Text('Pick Image'),
                       style: OutlinedButton.styleFrom(
@@ -93,7 +113,8 @@ class _CreateCategoryViewState extends State<CreateCategoryView> {
 
                     // Image Preview
                     ValueListenableBuilder(
-                      valueListenable: widget.viewModel.imageBytes,
+                      valueListenable:
+                          widget.createCategoryViewModel.imageBytes,
                       builder: (context, imageBytes, _) {
                         if (imageBytes == null) {
                           return Container(

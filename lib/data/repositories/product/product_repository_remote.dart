@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
+
 import '../../../app/app.dart';
 import '../../../domain/domain.dart';
 import '../../data.dart';
@@ -10,6 +12,10 @@ class ProductRepositoryRemote extends ProductRepository {
     : _productsService = productsService;
 
   final ProductsService _productsService;
+
+  @override
+  ValueListenable<int> get productsCount => _productsCount;
+  final ValueNotifier<int> _productsCount = ValueNotifier(0);
 
   /// Get all products by category id with Result pattern
   @override
@@ -59,4 +65,15 @@ class ProductRepositoryRemote extends ProductRepository {
   //    return Result.error(Exception('Failed to load products: $e'));
   //  }
   //}
+
+  @override
+  Future<Result<int>> getProductCount() async {
+    try {
+      final result = await _productsService.getProductsCount();
+      _productsCount.value = result.asOk.value;
+      return result;
+    } catch (e) {
+      return Result.error(Exception('Unknown error.'));
+    }
+  }
 }

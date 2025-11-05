@@ -49,8 +49,12 @@ class CategoryRepositoryRemote extends CategoryRepository {
     required String imageUrl,
     required String name,
     required bool isActive,
+    required AdminUser admin,
   }) async {
     try {
+      if (admin.role != AdminUserRole.superAdmin) {
+        return Result.error(Exception('No Admin Permission'));
+      }
       final result = await _categoriesService.createCategory(
         category: Category(imageUrl: imageUrl, name: name, isActive: isActive),
       );

@@ -28,7 +28,7 @@ class CreateCategoryViewModel {
   ValueListenable<Uint8List?> get imageBytes => _imageBytes;
 
   // COMMANDS
-  late Command1<void, String> createCategory;
+  late Command1<void, ({String name, AdminUser admin})> createCategory;
   late Command0<void> pickImage;
 
   // DISPOSE
@@ -40,8 +40,10 @@ class CreateCategoryViewModel {
   }
 
   // FUNCTIONS
-  Future<Result<void>> _createCategory(String name) async {
-    _log.info('Creating category: $name');
+  Future<Result<void>> _createCategory(
+    ({String name, AdminUser admin}) params,
+  ) async {
+    _log.info('Creating category: ${params.name}');
     _log.info('Uploading category image');
     final imageResult = await _uploadCategoryImageUseCase.call(
       imageBytes: _imageBytes.value!,
@@ -55,8 +57,9 @@ class CreateCategoryViewModel {
         return imageResult;
     }
     final categoryResult = await _categoryRepository.createCategory(
+      admin: params.admin,
       imageUrl: imageResult.asOk.value,
-      name: name,
+      name: params.name,
       isActive: true,
     );
     switch (categoryResult) {

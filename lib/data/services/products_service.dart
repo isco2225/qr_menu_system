@@ -118,4 +118,18 @@ class ProductsService {
       ),
     ];
   }*/
+
+  Future<Result<int>> getProductsCount() async {
+    try {
+      print('productsCount service fonction started.');
+      final result = await _firestore.collection('products').count().get();
+      if (result.count == null) {
+        return Result.error(Exception('couldnt fetch prodcucts count'));
+      }
+      print(result.count);
+      return Result.ok(result.count ?? 0);
+    } catch (e) {
+      return Result.error(Exception('Failed to get productsCount: $e'));
+    }
+  }
 }

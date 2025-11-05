@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_menu_system/data/repositories/category/category_repository.dart';
+import 'package:qr_menu_system/data/repositories/product/product_repository.dart';
 import 'package:qr_menu_system/ui/admin/admin.dart';
 import 'package:qr_menu_system/ui/categories/categories.dart';
 
@@ -13,12 +14,17 @@ class AdminDashboardScreen extends StatefulWidget {
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   late final FetchCategoriesViewModel _fetchCategoriesViewModel;
+  late final AdminProductViewModel _adminProductViewModel;
   @override
   void initState() {
     super.initState();
     _fetchCategoriesViewModel = FetchCategoriesViewModel(
       categoryRepository: context.read<CategoryRepository>(),
     );
+    _adminProductViewModel = AdminProductViewModel(
+      productRepository: context.read<ProductRepository>(),
+    );
+    _adminProductViewModel.getProductsCount.execute();
   }
 
   @override
@@ -31,6 +37,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget build(BuildContext context) {
     return AdminDashboardView(
       fetchCategoriesViewModel: _fetchCategoriesViewModel,
+      adminProductViewModel: _adminProductViewModel,
     );
   }
 }

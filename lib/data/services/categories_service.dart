@@ -32,7 +32,6 @@ class CategoriesService {
     }
   }
 
-  // TODO: it will required "created by(adminName)".
   Future<Result<Category>> createCategory({required Category category}) async {
     try {
       // Check admin authentication

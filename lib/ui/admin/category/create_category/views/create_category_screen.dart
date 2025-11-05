@@ -13,12 +13,13 @@ class CreateCategoryScreen extends StatefulWidget {
 }
 
 class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
-  late final CreateCategoryViewModel _viewModel;
+  late final CreateCategoryViewModel _createCategoryViewModel;
+  late final FetchAdminViewModel _fetchAdminViewModel;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = CreateCategoryViewModel(
+    _createCategoryViewModel = CreateCategoryViewModel(
       imagePickerService: ImagePickerService(),
       categoryRepository: context.read<CategoryRepository>(),
       uploadCategoryImageUseCase: UploadCategoryImageUseCase(
@@ -26,7 +27,10 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
         categoryRepository: context.read<CategoryRepository>(),
       ),
     );
-    _viewModel.createCategory.handleCompleted(
+    _fetchAdminViewModel = FetchAdminViewModel(
+      adminRepository: context.read<AdminRepository>(),
+    );
+    _createCategoryViewModel.createCategory.handleCompleted(
       context,
       onCompleted: (category) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -34,17 +38,21 @@ class _CreateCategoryScreenState extends State<CreateCategoryScreen> {
         );
       },
     );
-    _viewModel.createCategory.handleError(context);
+    _createCategoryViewModel.createCategory.handleError(context);
   }
 
   @override
   void dispose() {
-    _viewModel.dispose();
+    _createCategoryViewModel.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CreateCategoryView(viewModel: _viewModel);
+    final admin = _fetchAdminViewModel.admin.value;
+    return CreateCategoryView(
+      createCategoryViewModel: _createCategoryViewModel,
+      admin: admin,
+    );
   }
 }
