@@ -64,7 +64,7 @@ class ProductBox extends StatelessWidget {
                       colors: [Colors.grey.shade200, Colors.grey.shade100],
                     ),
                   ),
-                  child: Image.asset(
+                  child: Image.network(
                     product.imageUrl,
                     fit: BoxFit.cover,
                     errorBuilder:

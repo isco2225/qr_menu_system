@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_menu_system/data/data.dart';
+
 import '../../ui/ui.dart';
 
 part 'app_router.g.dart';
@@ -75,7 +76,7 @@ class AdminDashboardRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const AdminDashboardView();
+      const AdminDashboardScreen();
 }
 
 class AdminCategoriesRoute extends GoRouteData {
@@ -83,7 +84,7 @@ class AdminCategoriesRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const CategoryView();
+      const CategoryScreen();
 }
 
 class CreateCategoryRoute extends GoRouteData {
@@ -104,10 +105,8 @@ final GoRouter appRouter = GoRouter(
     final isSignedIn = context.read<AdminRepository>().admin.value?.uid != null;
     final bool isAdminRoute = state.uri.path.startsWith('/admin');
 
-    // admin paneline login olmadan giriş olursa
     if (isAdminRoute && !isSignedIn) return '/sign-in';
 
-    // sign-in olmuşsa direkt dashboard’a at
     if (state.fullPath == '/sign-in' && isSignedIn) return '/admin/dashboard';
 
     return null;

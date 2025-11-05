@@ -1,62 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:qr_menu_system/ui/ui.dart';
-import 'package:shared/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 
-class AdminView extends StatefulWidget {
-  const AdminView({
-    super.key,
-    required this.signOutViewModel,
-    required this.fetchAdminViewModel,
-  });
-  final SignOutViewModel signOutViewModel;
-  final FetchAdminViewModel fetchAdminViewModel;
+class AdminView extends StatelessWidget {
+  const AdminView({super.key, required this.navigationShell});
 
-  @override
-  State<AdminView> createState() => _AdminViewState();
-}
+  final StatefulNavigationShell navigationShell;
 
-class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
-      appBar: AppBar(
-        title: Text('Admin Panel'),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(
-            'https://ui-avatars.com/api/?name=${widget.fetchAdminViewModel.admin.value?.name ?? ''}',
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (index) {
+          navigationShell.goBranch(index);
+        },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
           ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              widget.signOutViewModel.signOut.execute();
-            },
-            icon: Icon(Icons.logout),
+          NavigationDestination(
+            icon: Icon(Icons.category),
+            label: 'Categories',
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          /*
-          TextButton(
-            onPressed: () {
-              const CategoryRoute().go(context);
-            },
-            child: const Text("Categories"),
-          ),
-          TextButton(
-            onPressed: () {
-              const CategoryRoute().go(context);
-            },
-            child: const Text("Admins"),
-          ),
-          TextButton(
-            onPressed: () {
-              const CategoryRoute().go(context);
-            },
-            child: const Text("Categories"),
-          ),*/
         ],
       ),
     );

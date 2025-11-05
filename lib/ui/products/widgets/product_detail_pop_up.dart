@@ -43,7 +43,7 @@ class ProductDetail extends StatelessWidget {
                     height: _imageHeight,
                     width: double.infinity,
                     decoration: BoxDecoration(color: Colors.grey.shade100),
-                    child: Image.asset(
+                    child: Image.network(
                       product.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder:

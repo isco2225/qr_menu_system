@@ -93,7 +93,7 @@ class CategoryBox extends StatelessWidget {
 
   /// Builds the category image with error handling.
   Widget _buildCategoryImage() {
-    return Image.asset(
+    return Image.network(
       category.imageUrl,
       fit: BoxFit.cover,
       errorBuilder:
