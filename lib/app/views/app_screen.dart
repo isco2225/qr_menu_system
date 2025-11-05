@@ -28,7 +28,9 @@ class _AppScreenState extends State<AppScreen> {
     _fetchCategoriesViewModel = FetchCategoriesViewModel(
       categoryRepository: widget.categoriesRepository,
     );
-    _fetchCategoriesViewModel.fetchCategories.execute(); // start loading
+    _fetchCategoriesViewModel.fetchCategories.execute((
+      admin: null,
+    )); // start loading
   }
 
   @override

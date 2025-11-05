@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_menu_system/data/data.dart';
-
 import '../../ui/ui.dart';
 
 part 'app_router.g.dart';
 
-// Public routes (müşteriler için - login gerektirmez)
+// -------------------- PUBLIC ROUTES --------------------
+
 @TypedGoRoute<CategoriesRoute>(path: '/')
 class CategoriesRoute extends GoRouteData {
   const CategoriesRoute();
@@ -28,7 +28,8 @@ class ProductsRoute extends GoRouteData {
   }
 }
 
-// Admin sign-in (gizli URL - sadece adminler bilir)
+// -------------------- ADMIN SIGN-IN --------------------
+
 @TypedGoRoute<SignInRoute>(path: '/sign-in')
 class SignInRoute extends GoRouteData {
   const SignInRoute();
@@ -39,23 +40,50 @@ class SignInRoute extends GoRouteData {
   }
 }
 
-// Protected admin routes (authentication gerekli)
-@TypedGoRoute<AdminPanelRoute>(
-  path: '/admin-panel',
-  routes: <TypedGoRoute<GoRouteData>>[
-    TypedGoRoute<CreateCategoryRoute>(path: 'create-category'),
-    //TypedGoRoute<AddProductRoute>(path: 'create-product'),
-    //TypedGoRoute<AddProductRoute>(path: 'edit-category'),
-    //TypedGoRoute<AddProductRoute>(path: 'edit-product'),
-    //TypedGoRoute<AddProductRoute>(path: 'create-admin'),
+// -------------------- ADMIN LAYOUT (StatefulShell) --------------------
+
+@TypedStatefulShellRoute<AdminShellRoute>(
+  branches: [
+    TypedStatefulShellBranch(
+      routes: [TypedGoRoute<AdminDashboardRoute>(path: '/admin/dashboard')],
+    ),
+    TypedStatefulShellBranch(
+      routes: [
+        TypedGoRoute<AdminCategoriesRoute>(path: '/admin/categories'),
+        TypedGoRoute<CreateCategoryRoute>(path: '/admin/category/create'),
+      ],
+    ),
   ],
 )
-class AdminPanelRoute extends GoRouteData {
-  const AdminPanelRoute();
+class AdminShellRoute extends StatefulShellRouteData {
+  const AdminShellRoute();
+
+  @override
+  Widget builder(
+    BuildContext context,
+    GoRouterState state,
+    StatefulNavigationShell navigationShell,
+  ) {
+    return AdminScreen(navigationShell: navigationShell);
+  }
+}
+
+// -------------------- ADMIN BRANCH ROUTES --------------------
+
+class AdminDashboardRoute extends GoRouteData {
+  const AdminDashboardRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const AdminPanelScreen();
+      const AdminDashboardView();
+}
+
+class AdminCategoriesRoute extends GoRouteData {
+  const AdminCategoriesRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const CategoryView();
 }
 
 class CreateCategoryRoute extends GoRouteData {
@@ -66,24 +94,21 @@ class CreateCategoryRoute extends GoRouteData {
       const CreateCategoryScreen();
 }
 
-// class AddProductRoute extends GoRouteData {
-//   const AddProductRoute();
-
-//   @override
-//   Widget build(BuildContext context, GoRouterState state) =>
-//       const AddProductScreen();
-// }
+// -------------------- ROUTER CONFIG --------------------
 
 final GoRouter appRouter = GoRouter(
   routes: $appRoutes,
+  initialLocation: '/',
+  routerNeglect: false,
   redirect: (BuildContext context, GoRouterState state) {
     final isSignedIn = context.read<AdminRepository>().admin.value?.uid != null;
-    final bool isAdminRoute = state.uri.path.startsWith('/admin-panel');
+    final bool isAdminRoute = state.uri.path.startsWith('/admin');
 
-    // Admin route'a auth olmadan girilirse -> sign-in'e yönlendir
-    if (isAdminRoute && !isSignedIn) {
-      return '/sign-in';
-    }
+    // admin paneline login olmadan giriş olursa
+    if (isAdminRoute && !isSignedIn) return '/sign-in';
+
+    // sign-in olmuşsa direkt dashboard’a at
+    if (state.fullPath == '/sign-in' && isSignedIn) return '/admin/dashboard';
 
     return null;
   },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_menu_system/app/app.dart';
 
-import '../../../../../app/app.dart';
 import '../../../../../data/data.dart';
 import '../../auth.dart';
 
@@ -24,7 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
     signInViewModel.signIn.handleCompleted(
       context,
       onCompleted: (_) {
-        AdminPanelRoute().go(context);
+        AdminDashboardRoute().go(context);
       },
     );
   }

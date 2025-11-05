@@ -10,11 +10,39 @@ class CategoryBox extends StatelessWidget {
     super.key,
     required this.category,
     required this.fetchCategoriesViewModel,
+    required this.child,
     this.isAdmin = false,
   });
 
+  factory CategoryBox.editable({
+    required Category category,
+    required FetchCategoriesViewModel fetchCategoriesViewModel,
+    required AdminUser adminUser,
+    required bool isVisible,
+  }) {
+    return CategoryBox(
+      category: category,
+      fetchCategoriesViewModel: fetchCategoriesViewModel,
+      isAdmin: adminUser.role == AdminUserRole.superAdmin,
+      child: CategoryOptionsMenu(isCategoryVisible: category.isActive),
+    );
+  }
+
+  factory CategoryBox.viewable({
+    required Category category,
+    required FetchCategoriesViewModel fetchCategoriesViewModel,
+  }) {
+    return CategoryBox(
+      category: category,
+      fetchCategoriesViewModel: fetchCategoriesViewModel,
+      isAdmin: null,
+      child: const SizedBox.shrink(),
+    );
+  }
+
   final Category category;
   final FetchCategoriesViewModel fetchCategoriesViewModel;
+  final Widget child;
   final bool? isAdmin;
 
   static const double _cardHeight = 140.0;
@@ -55,6 +83,7 @@ class CategoryBox extends StatelessWidget {
               _buildCategoryImage(),
               _buildGradientOverlay(),
               _buildCategoryName(),
+              Positioned(top: 0, right: 0, child: child),
             ],
           ),
         ),

@@ -39,7 +39,8 @@ class _CategoriesViewState extends State<CategoriesView> {
         isFetching: _fetchCategoriesViewModel.fetchCategories.running,
         isAllItemsFetched: _fetchCategoriesViewModel.fetchCategories.completed,
         noItemsToShowWidget: const CategoryNoItem(),
-        onFetch: () => _fetchCategoriesViewModel.fetchCategories.execute(),
+        onFetch: () =>
+            _fetchCategoriesViewModel.fetchCategories.execute((admin: null)),
       ),
     );
   }

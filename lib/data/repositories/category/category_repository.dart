@@ -5,7 +5,7 @@ import '../../../domain/domain.dart';
 
 abstract class CategoryRepository {
   ValueListenable<List<Category>> get categories;
-  Future<Result<List<Category>>> fetchCategories();
+  Future<Result<List<Category>>> fetchCategories({required AdminUser? admin});
   Future<Result<Category>> fetchCategoryById(int id);
   Future<Result<Category>> createCategory({
     required String imageUrl,

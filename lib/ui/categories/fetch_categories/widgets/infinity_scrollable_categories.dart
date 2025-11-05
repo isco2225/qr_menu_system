@@ -49,7 +49,7 @@ class _InfinityScrollableCategoriesState
           itemBuilder: (context, index) {
             final category = widget.categories.value[index];
             return Center(
-              child: CategoryBox(
+              child: CategoryBox.viewable(
                 category: category,
                 fetchCategoriesViewModel: widget.fetchCategoriesViewModel,
               ),

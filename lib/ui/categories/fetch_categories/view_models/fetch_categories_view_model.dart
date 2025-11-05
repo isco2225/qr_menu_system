@@ -9,7 +9,7 @@ class FetchCategoriesViewModel {
   FetchCategoriesViewModel({required CategoryRepository categoryRepository})
     : _categoryRepository = categoryRepository {
     // DEFINE COMMANDS
-    fetchCategories = Command0(
+    fetchCategories = Command1(
       _fetchCategories,
       debugLabel: 'FetchCategoriesViewModel.fetchCategories',
     );
@@ -24,7 +24,7 @@ class FetchCategoriesViewModel {
       _categoryRepository.categories;
 
   // COMMANDS
-  late Command0 fetchCategories;
+  late Command1<void, ({AdminUser? admin})> fetchCategories;
 
   // DISPOSE
   void dispose() {
@@ -33,8 +33,13 @@ class FetchCategoriesViewModel {
   }
 
   // FUNCTIONS
-  Future<Result<List<Category>>> _fetchCategories() async {
-    final result = await _categoryRepository.fetchCategories();
+  Future<Result<List<Category>>> _fetchCategories(
+    ({AdminUser? admin}) commands,
+  ) async {
+    print(commands.admin?.email);
+    final result = await _categoryRepository.fetchCategories(
+      admin: commands.admin,
+    );
     if (result is Error<List<Category>>) {
       _log.warning('Failed to load categories', result.error);
       return result;

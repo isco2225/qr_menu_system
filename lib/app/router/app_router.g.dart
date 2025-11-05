@@ -10,7 +10,7 @@ List<RouteBase> get $appRoutes => [
   $categoriesRoute,
   $productsRoute,
   $signInRoute,
-  $adminPanelRoute,
+  $adminShellRoute,
 ];
 
 RouteBase get $categoriesRoute => GoRouteData.$route(
@@ -80,24 +80,61 @@ extension $SignInRouteExtension on SignInRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $adminPanelRoute => GoRouteData.$route(
-  path: '/admin-panel',
+RouteBase get $adminShellRoute => StatefulShellRouteData.$route(
+  factory: $AdminShellRouteExtension._fromState,
+  branches: [
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/admin/dashboard',
 
-  factory: $AdminPanelRouteExtension._fromState,
-  routes: [
-    GoRouteData.$route(
-      path: 'create-category',
+          factory: $AdminDashboardRouteExtension._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/admin/categories',
 
-      factory: $CreateCategoryRouteExtension._fromState,
+          factory: $AdminCategoriesRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/admin/category/create',
+
+          factory: $CreateCategoryRouteExtension._fromState,
+        ),
+      ],
     ),
   ],
 );
 
-extension $AdminPanelRouteExtension on AdminPanelRoute {
-  static AdminPanelRoute _fromState(GoRouterState state) =>
-      const AdminPanelRoute();
+extension $AdminShellRouteExtension on AdminShellRoute {
+  static AdminShellRoute _fromState(GoRouterState state) =>
+      const AdminShellRoute();
+}
 
-  String get location => GoRouteData.$location('/admin-panel');
+extension $AdminDashboardRouteExtension on AdminDashboardRoute {
+  static AdminDashboardRoute _fromState(GoRouterState state) =>
+      const AdminDashboardRoute();
+
+  String get location => GoRouteData.$location('/admin/dashboard');
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AdminCategoriesRouteExtension on AdminCategoriesRoute {
+  static AdminCategoriesRoute _fromState(GoRouterState state) =>
+      const AdminCategoriesRoute();
+
+  String get location => GoRouteData.$location('/admin/categories');
 
   void go(BuildContext context) => context.go(location);
 
@@ -113,7 +150,7 @@ extension $CreateCategoryRouteExtension on CreateCategoryRoute {
   static CreateCategoryRoute _fromState(GoRouterState state) =>
       const CreateCategoryRoute();
 
-  String get location => GoRouteData.$location('/admin-panel/create-category');
+  String get location => GoRouteData.$location('/admin/category/create');
 
   void go(BuildContext context) => context.go(location);
 

@@ -7,13 +7,17 @@ import '../../app/app.dart';
 class CategoriesService {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
   FirebaseAuth get _auth => FirebaseAuth.instance;
-  Future<Result<List<Category>>> fetchCategories() async {
+  Future<Result<List<Category>>> fetchCategories({
+    required AdminUser? admin,
+  }) async {
     try {
       print('Fetching categories');
-      final categories = await _firestore
-          .collection('categories')
-          .where('isActive', isEqualTo: true)
-          .get();
+      final categories = admin == null
+          ? await _firestore
+                .collection('categories')
+                .where('isActive', isEqualTo: true)
+                .get()
+          : await _firestore.collection('categories').get();
       if (categories.docs.isEmpty) {
         print('No categories found');
         return Result.error(Exception('No categories found'));

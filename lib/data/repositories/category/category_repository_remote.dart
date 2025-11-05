@@ -21,10 +21,12 @@ class CategoryRepositoryRemote extends CategoryRepository {
   final ValueNotifier<List<Category>> _categories = ValueNotifier([]);
 
   @override
-  Future<Result<List<Category>>> fetchCategories() async {
+  Future<Result<List<Category>>> fetchCategories({
+    required AdminUser? admin,
+  }) async {
     try {
       final Result<List<Category>> result = await _categoriesService
-          .fetchCategories();
+          .fetchCategories(admin: admin);
       switch (result) {
         case Ok():
           _categories.value = result.value;
